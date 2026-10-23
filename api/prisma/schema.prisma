@@ -1,0 +1,102 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoUsuario {
+  ADMIN
+  FUNCIONARIO
+}
+
+enum TipoMovimentacao {
+  ENTRADA
+  SAIDA
+}
+
+enum StatusVenda {
+  CONCLUIDA
+  CANCELADA
+}
+
+model Usuario {
+  id           Int                   @id @default(autoincrement())
+  nome         String                @db.VarChar(100)
+  email        String                @unique @db.VarChar(150)
+  senha        String                @db.VarChar(255)
+  tipo         TipoUsuario           @default(FUNCIONARIO)
+  criadoEm     DateTime              @default(now())
+  vendas       Venda[]
+  movimentacoes MovimentacaoEstoque[]
+
+  @@map("usuarios")
+}
+
+model Disco {
+  id                Int                   @id @default(autoincrement())
+  titulo            String                @db.VarChar(150)
+  artista           String                @db.VarChar(120)
+  genero            String                @db.VarChar(80)
+  anoLancamento     Int?
+  preco             Decimal               @db.Decimal(10, 2)
+  quantidadeEstoque Int                   @default(0)
+  estoqueMinimo     Int                   @default(5)
+  descricao         String?               @db.Text
+  criadoEm          DateTime              @default(now())
+  atualizadoEm      DateTime              @updatedAt
+  movimentacoes     MovimentacaoEstoque[]
+  itensVenda        ItemVenda[]
+
+  @@index([titulo])
+  @@index([artista])
+  @@map("discos")
+}
+
+model MovimentacaoEstoque {
+  id          Int              @id @default(autoincrement())
+  discoId     Int
+  usuarioId   Int
+  tipo        TipoMovimentacao
+  quantidade  Int
+  data        DateTime         @default(now())
+  observacao  String?          @db.VarChar(255)
+  disco       Disco            @relation(fields: [discoId], references: [id])
+  usuario     Usuario          @relation(fields: [usuarioId], references: [id])
+
+  @@index([discoId])
+  @@index([usuarioId])
+  @@map("movimentacoes_estoque")
+}
+
+model Venda {
+  id         Int        @id @default(autoincrement())
+  usuarioId  Int
+  data       DateTime   @default(now())
+  status     StatusVenda @default(CONCLUIDA)
+  valorTotal Decimal    @default(0) @db.Decimal(10, 2)
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
+  itens      ItemVenda[]
+
+  @@index([usuarioId])
+  @@index([data])
+  @@map("vendas")
+}
+
+model ItemVenda {
+  id            Int      @id @default(autoincrement())
+  vendaId       Int
+  discoId       Int
+  quantidade    Int
+  precoUnitario Decimal  @db.Decimal(10, 2)
+  subtotal      Decimal  @db.Decimal(10, 2)
+  venda         Venda    @relation(fields: [vendaId], references: [id], onDelete: Cascade)
+  disco         Disco    @relation(fields: [discoId], references: [id])
+
+  @@index([vendaId])
+  @@index([discoId])
+  @@map("itens_venda")
+}
