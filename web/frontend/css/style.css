@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1a1512, #30211c, #1a1512);
+  color: #f4e8c1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 350px;
+  height: 350px;
+  top: -150px;
+  left: -100px;
+  border: 1px solid rgba(230, 197, 148, 0.2);
+  box-shadow:
+    0 0 0 30px rgba(230, 197, 148, 0.03),
+    0 0 0 60px rgba(230, 197, 148, 0.03);
+}
+
+body::after {
+  width: 280px;
+  height: 280px;
+  bottom: -140px;
+  right: -80px;
+  border: 1px solid rgba(139, 38, 30, 0.3);
+  box-shadow:
+    0 0 0 25px rgba(139, 38, 30, 0.03),
+    0 0 0 50px rgba(139, 38, 30, 0.03);
+}
+
+.welcome-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(39, 29, 24, 0.9);
+  border: 1px solid rgba(230, 197, 148, 0.2);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  padding: 45px 30px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  animation: aparecer 0.8s ease;
+}
+
+.vinyl-img {
+  width: 230px;
+  height: 230px;
+  object-fit: contain;
+  margin-bottom: 25px;
+  filter: sepia(20%) drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+  transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.vinyl-img:hover {
+  transform: rotate(12deg) scale(1.06);
+  filter: sepia(10%) drop-shadow(0 0 20px rgba(230, 197, 148, 0.25));
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #e6c594;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 65px;
+  height: 3px;
+  background: linear-gradient(90deg, #8b261e, #e6c594);
+  margin: 15px auto 0;
+  border-radius: 10px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #d1bfa7;
+  line-height: 1.8;
+  margin: 20px 0 32px;
+  font-weight: 400;
+}
+
+.btn-access {
+  display: inline-block;
+  width: 85%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #a32e25, #702019);
+  color: #f4e8c1;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: 1px solid rgba(244, 232, 193, 0.15);
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 8px 25px rgba(139, 38, 30, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-access:hover {
+  background: linear-gradient(135deg, #b63b30, #8b261e);
+  box-shadow: 0 12px 30px rgba(139, 38, 30, 0.4);
+  transform: translateY(-4px);
+}
+
+.btn-access:active {
+  transform: scale(0.97);
+}
+
+/* Animação de entrada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ajustes para celulares */
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 35px 22px;
+    border-radius: 22px;
+  }
+
+  .vinyl-img {
+    width: 190px;
+    height: 190px;
+  }
+
+  .title {
+    font-size: 29px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .btn-access {
+    width: 100%;
+  }
+}
