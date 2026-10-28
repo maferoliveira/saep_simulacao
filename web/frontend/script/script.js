@@ -4,10 +4,6 @@ const API_URL = "http://localhost:3000";
 let discoEmEdicaoId = null;
 let discosDisponiveis = [];
 
-// =====================================
-// FUNÇÕES GERAIS
-// =====================================
-
 function acessarApp() {
     window.location.href = "login.html";
 }
@@ -83,16 +79,13 @@ function formatarData(data) {
     return dataFormatada.toLocaleString("pt-BR");
 }
 
-// Cria uma célula sem interpretar os dados como HTML.
+
 function criarCelula(valor) {
     const celula = document.createElement("td");
     celula.textContent = valor ?? "-";
     return celula;
 }
 
-// =====================================
-// LOGIN
-// =====================================
 
 async function salvarDados(event) {
     event.preventDefault();
@@ -126,10 +119,6 @@ async function salvarDados(event) {
         alert(erro.message);
     }
 }
-
-// =====================================
-// PAINEL PRINCIPAL
-// =====================================
 
 function carregarHome() {
     const usuario = exigirLogin();
@@ -207,9 +196,6 @@ function prepararNovoDisco() {
     abrirModal();
 }
 
-// =====================================
-// CADASTRAR OU ATUALIZAR DISCO
-// =====================================
 
 async function salvarDisco(event) {
     event.preventDefault();
@@ -304,9 +290,6 @@ async function salvarDisco(event) {
     }
 }
 
-// =====================================
-// LISTAR E BUSCAR DISCOS
-// =====================================
 
 async function listarDiscos() {
     const tabela = document.getElementById("tabelaDiscos");
@@ -391,9 +374,6 @@ async function listarDiscos() {
     }
 }
 
-// =====================================
-// EDITAR DISCO
-// =====================================
 
 function editarDisco(disco) {
     discoEmEdicaoId = disco.id;
@@ -419,9 +399,6 @@ function editarDisco(disco) {
     abrirModal();
 }
 
-// =====================================
-// EXCLUIR DISCO
-// =====================================
 
 async function excluirDisco(disco) {
     const confirmar = confirm(
@@ -446,9 +423,6 @@ async function excluirDisco(disco) {
     }
 }
 
-// =====================================
-// CARREGAR DISCOS NO FORMULÁRIO DE VENDA
-// =====================================
 
 function atualizarSelectDiscos() {
     const select = document.getElementById("discoVenda");
@@ -490,9 +464,6 @@ function atualizarSelectDiscos() {
     atualizarValorEstimado();
 }
 
-// =====================================
-// CALCULAR VALOR ESTIMADO DA VENDA
-// =====================================
 
 function atualizarValorEstimado() {
     const select = document.getElementById("discoVenda");
@@ -513,9 +484,6 @@ function atualizarValorEstimado() {
     textoValor.textContent = `Valor estimado: ${formatarMoeda(total)}`;
 }
 
-// =====================================
-// REGISTRAR VENDA
-// =====================================
 
 async function salvarVenda(event) {
     event.preventDefault();
@@ -590,10 +558,6 @@ async function salvarVenda(event) {
     }
 }
 
-// =====================================
-// RESUMO DE VENDAS RECENTES
-// =====================================
-
 async function listarVendas() {
     const tabela = document.getElementById("tabelaVendas");
 
@@ -656,10 +620,6 @@ async function listarVendas() {
         tabela.appendChild(linha);
     }
 }
-
-// =====================================
-// INICIALIZAÇÃO
-// =====================================
 
 document.addEventListener("DOMContentLoaded", () => {
     const caminho = window.location.pathname.toLowerCase();

@@ -135,7 +135,6 @@ body::after {
   transform: scale(0.97);
 }
 
-/* Animação de entrada */
 @keyframes aparecer {
   from {
     opacity: 0;
