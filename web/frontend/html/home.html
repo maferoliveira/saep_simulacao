@@ -1,114 +1,225 @@
+
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vinil Store - Painel Principal</title>
-  <link rel="stylesheet" href="../css/home.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinil Store - Painel Principal</title>
+    <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
 
-  <header class="navbar">
-    
-    <div class="logo">
-        <img class="img-logo" src="../assets/disco.png.png" alt="">
-        <h1>Vinil Store</h1>
-    </div>
-    
-    
-    <nav class="nav-links">
-      <button class="btn-nav-action" id="btnCadastrar">Cadastrar Disco</button>
-    </nav>
-
-    <div class="user-area">
-      <button class="btn-logout" onclick="fazerLogout()">Sair</button>
-    </div>
-  </header>
-
-  <main class="main-container">
-    <section class="welcome-banner">
-      <h1>Painel de Controlo</h1>
-      <p>Gerencie o seu acervo analógico e acompanhe o desempenho da loja.</p>
-    </section>
-
-    <section class="sales-summary">
-      <h2>Resumo de Vendas Recentes</h2>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Disco / Álbum</th>
-              <th>Comprador</th>
-              <th>Data</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaVendas">
-            <tr>
-              <td>The Dark Side of the Moon - Pink Floyd</td>
-              <td>Ana Costa</td>
-              <td>23/10/2026</td>
-              <td>R$ 180,00</td>
-            </tr>
-            <tr>
-              <td>Abbey Road - The Beatles</td>
-              <td>Carlos Silva</td>
-              <td>22/10/2026</td>
-              <td>R$ 150,00</td>
-            </tr>
-            <tr>
-              <td>Rumours - Fleetwood Mac</td>
-              <td>Mariana Souza</td>
-              <td>21/10/2026</td>
-              <td>R$ 165,00</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <dialog id="modalDisco" class="modal-overlay">
-    <div class="modal-content">
-      <span class="close-btn" onclick="fecharModal()">&times;</span>
-      
-      <h2 class="title">Cadastrar Disco</h2>
-      <p class="subtitle">Insira as informações sobre a venda do disco.</p>
-
-      <form id="formCadastrarDisco" onsubmit="salvarDisco(event)">
-        <div class="input-group">
-          <label for="nomeDisco">Nome do Disco</label>
-          <input type="text" id="nomeDisco" placeholder="Ex: Dark Side of the Moon" required>
+    <header class="navbar">
+        <div class="logo">
+            <img class="img-logo" src="../assets/disco.png.png" alt="Logo Vinil Store">
+            <h1>Vinil Store</h1>
         </div>
 
-        <div class="input-group">
-          <label for="nomeComprador">Nome do Comprador</label>
-          <input type="text" id="nomeComprador" placeholder="Ex: João Silva" required>
+        <nav class="nav-links">
+            <button class="btn-nav-action" id="btnCadastrar" type="button">
+                Cadastrar Disco
+            </button>
+        </nav>
+
+        <div class="user-area">
+            <span id="nomeUsuario"></span>
+            <button class="btn-logout" type="button" onclick="fazerLogout()">Sair</button>
         </div>
+    </header>
 
-        <div class="input-group">
-          <label for="dataCompra">Data que Comprou</label>
-          <input type="date" id="dataCompra" required>
+    <main class="main-container">
+
+        <section class="welcome-banner">
+            <h1>Painel de Controle</h1>
+            <p>Gerencie seu acervo analógico e acompanhe o desempenho da loja.</p>
+        </section>
+
+        <!-- Discos cadastrados -->
+        <section class="sales-summary">
+            <h2>Discos Cadastrados</h2>
+
+            <div class="search-container">
+                <input
+                    type="search"
+                    id="buscaDiscos"
+                    placeholder="Buscar por título ou artista..."
+                    aria-label="Buscar discos por título ou artista"
+                >
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Artista</th>
+                            <th>Gênero</th>
+                            <th>Ano</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaDiscos">
+                        <tr>
+                            <td colspan="7">Carregando discos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Registrar venda -->
+        <section class="sales-summary">
+            <h2>Registrar Venda</h2>
+            <p>Selecione um disco e informe a quantidade vendida.</p>
+
+            <form id="formVenda">
+                <div class="input-group">
+                    <label for="discoVenda">Disco</label>
+                    <select id="discoVenda" required>
+                        <option value="">Carregando discos...</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="quantidadeVenda">Quantidade</label>
+                    <input
+                        type="number"
+                        id="quantidadeVenda"
+                        min="1"
+                        value="1"
+                        step="1"
+                        required
+                    >
+                </div>
+
+                <p id="valorEstimado">Valor estimado: R$ 0,00</p>
+
+                <button type="submit" class="btn-access" id="btnRegistrarVenda">
+                    Registrar Venda
+                </button>
+            </form>
+        </section>
+
+        <!-- Resumo de vendas recentes -->
+        <section class="sales-summary">
+            <h2>Resumo de Vendas Recentes</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Funcionário</th>
+                            <th>Data</th>
+                            <th>Valor total</th>
+                            <th>Status</th>
+                            <th>Discos vendidos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaVendas">
+                        <tr>
+                            <td colspan="6">Carregando vendas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal para cadastrar e editar disco -->
+    <dialog id="modalDisco" class="modal-overlay">
+        <div class="modal-content">
+            <button
+                type="button"
+                class="close-btn"
+                onclick="fecharModal()"
+                aria-label="Fechar modal"
+            >&times;</button>
+
+            <h2 class="title" id="tituloModal">Cadastrar Disco</h2>
+            <p class="subtitle" id="subtituloModal">
+                Preencha os dados do disco para adicioná-lo ao acervo.
+            </p>
+
+            <form id="formCadastrarDisco">
+                <div class="input-group">
+                    <label for="nomeDisco">Título do disco</label>
+                    <input type="text" id="nomeDisco" placeholder="Ex.: Thriller" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="artista">Artista</label>
+                    <input type="text" id="artista" placeholder="Ex.: Michael Jackson" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="genero">Gênero musical</label>
+                    <input type="text" id="genero" placeholder="Ex.: Pop" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="anoLancamento">Ano de lançamento</label>
+                    <input
+                        type="number"
+                        id="anoLancamento"
+                        placeholder="Ex.: 1982"
+                        min="1900"
+                        max="2100"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="valorDisco">Preço do disco (R$)</label>
+                    <input
+                        type="number"
+                        id="valorDisco"
+                        step="0.01"
+                        min="0"
+                        placeholder="Ex.: 200.00"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="quantidadeEstoque">Quantidade em estoque</label>
+                    <input
+                        type="number"
+                        id="quantidadeEstoque"
+                        min="0"
+                        value="0"
+                        step="1"
+                        required
+                    >
+                    <small>Na edição, altere o estoque pela funcionalidade de movimentação.</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="estoqueMinimo">Estoque mínimo</label>
+                    <input
+                        type="number"
+                        id="estoqueMinimo"
+                        min="0"
+                        value="5"
+                        step="1"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" placeholder="Descrição opcional">
+                </div>
+
+                <button type="submit" class="btn-access" id="btnSalvarDisco">
+                    Cadastrar disco
+                </button>
+            </form>
         </div>
+    </dialog>
 
-        <div class="input-group">
-          <label for="valorDisco">Valor do Disco (R$)</label>
-          <input type="number" id="valorDisco" step="0.01" placeholder="Ex: 150.00" required>
-        </div>
-
-        <button type="submit" class="btn-access">Salvar</button>
-      </form>
-    </div>
-</dialog>
-
-  <script src="../script/script.js"></script>
-  <script>
-    window.onload = function() {
-      const usuarioSalvo = localStorage.getItem('usuarioLogado');
-      if (usuarioSalvo) {
-        document.getElementById('nomeUsuario').textContent = usuarioSalvo;
-      }
-    };
-  </script>
+    <script src="../script/script.js"></script>
 </body>
 </html>

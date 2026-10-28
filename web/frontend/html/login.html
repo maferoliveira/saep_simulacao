@@ -1,38 +1,44 @@
+
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vinil Store - Cadastro</title>
-  <link rel="stylesheet" href="../css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Control - Login</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
+    <main class="login-card">
+        <h1 class="title">Vinyl Control</h1>
+        <p>Entre com seus dados para acessar o sistema.</p>
 
-  <main class="login-card">
-    <h1 class="title">Criar Conta</h1>
+        <form id="formLogin">
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="seu@email.com"
+                    autocomplete="username"
+                    required
+                >
+            </div>
 
-    <form id="loginForm" onsubmit="salvarDados(event)">
-      
-      <div class="input-group">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" placeholder="O seu nome completo" required>
-      </div>
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
 
-      <div class="input-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="seu@email.com" required>
-      </div>
+            <button type="submit" class="btn-access">Entrar</button>
+        </form>
+    </main>
 
-      <div class="input-group">
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" placeholder="••••••••" required>
-      </div>
-
-      <button type="submit" class="btn-access">Salvar</button>
-    </form>
-  </main>
-
-  <script src="../script/script.js"></script>
-
+    <script src="../script/script.js"></script>
 </body>
 </html>
