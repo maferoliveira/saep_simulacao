@@ -1,0 +1,107 @@
+/* Reset básico e fontes vintage */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif, Georgia;
+}
+
+body {
+  background-color: #1a1512; /* Fundo escuro com toque retrô/amadeirado */
+  color: #f4e8c1; /* Texto em tom marfim/pergaminho */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container Principal do Formulário */
+.login-card {
+  background: transparent;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Título com estilo vintage */
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #e6c594; /* Tom dourado envelhecido */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #4a3b32;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+/* Subtítulo / Frase */
+.subtitle {
+  font-size: 15px;
+  color: #d1bfa7;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+/* Grupos de Inputs */
+.input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  color: #e6c594;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #241d18;
+  border: 1px solid #4a3b32;
+  border-radius: 4px;
+  color: #f4e8c1;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #e6c594;
+}
+
+/* Botão Salvar (Mantendo o estilo do botão Acessar) */
+.btn-access {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 0;
+  background: #8b261e; /* Vermelho vinho clássico */
+  color: #f4e8c1;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 2px solid #5a1712;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.btn-access:hover {
+  background: #a32e25;
+  border-color: #701d17;
+  transform: translateY(-2px);
+}
+
+.btn-access:active {
+  transform: translateY(0);
+}

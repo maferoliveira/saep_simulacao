@@ -1,7 +1,6 @@
 
 const prisma = require("../data/prisma");
 
-// Listar discos em ordem alfabética e indicar estoque baixo
 async function listarEstoque(req, res) {
   try {
     const discos = await prisma.disco.findMany({
@@ -32,7 +31,6 @@ async function listarEstoque(req, res) {
   }
 }
 
-// Listar histórico de movimentações
 async function listarHistorico(req, res) {
   try {
     const movimentacoes = await prisma.movimentacaoEstoque.findMany({
@@ -66,7 +64,7 @@ async function listarHistorico(req, res) {
   }
 }
 
-// Registrar entrada ou saída de estoque
+
 async function registrarMovimentacao(req, res) {
   try {
     const {
@@ -82,7 +80,7 @@ async function registrarMovimentacao(req, res) {
     const idUsuario = Number(usuarioId);
     const qtd = Number(quantidade);
 
-    // Validar disco e usuário
+  
     if (
       !Number.isInteger(idDisco) ||
       idDisco <= 0 ||
@@ -94,21 +92,18 @@ async function registrarMovimentacao(req, res) {
       });
     }
 
-    // Validar tipo de movimentação
     if (!["ENTRADA", "SAIDA"].includes(tipo)) {
       return res.status(400).json({
         erro: "O tipo deve ser ENTRADA ou SAIDA."
       });
     }
 
-    // Validar quantidade
     if (!Number.isInteger(qtd) || qtd <= 0) {
       return res.status(400).json({
         erro: "A quantidade deve ser um número inteiro maior que zero."
       });
     }
 
-    // Validar data, caso seja informada
     let dataMovimentacao;
 
     if (data !== undefined) {
@@ -121,7 +116,6 @@ async function registrarMovimentacao(req, res) {
       }
     }
 
-    // Atualizar estoque e registrar movimentação na mesma transação
     const movimentacao = await prisma.$transaction(async (tx) => {
       const disco = await tx.disco.findUnique({
         where: {
@@ -147,7 +141,6 @@ async function registrarMovimentacao(req, res) {
         throw erro;
       }
 
-      // Impedir saída maior que o estoque disponível
       if (tipo === "SAIDA" && disco.quantidadeEstoque < qtd) {
         const erro = new Error(
           "Estoque insuficiente para essa saída."
@@ -162,7 +155,6 @@ async function registrarMovimentacao(req, res) {
           ? disco.quantidadeEstoque + qtd
           : disco.quantidadeEstoque - qtd;
 
-      // Atualizar quantidade disponível
       await tx.disco.update({
         where: {
           id: idDisco
@@ -172,7 +164,6 @@ async function registrarMovimentacao(req, res) {
         }
       });
 
-      // Registrar a movimentação
       return tx.movimentacaoEstoque.create({
         data: {
           discoId: idDisco,
@@ -181,7 +172,6 @@ async function registrarMovimentacao(req, res) {
           quantidade: qtd,
           observacao: observacao || null,
 
-          // Usa a data informada ou o padrão do banco
           ...(dataMovimentacao
             ? { data: dataMovimentacao }
             : {})

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinil Store - Painel Principal</title>
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+
+  <header class="navbar">
+    
+    <div class="logo">
+        <img class="img-logo" src="../assets/disco.png.png" alt="">
+        <h1>Vinil Store</h1>
+    </div>
+    
+    
+    <nav class="nav-links">
+      <button class="btn-nav-action" id="btnCadastrar">Cadastrar Disco</button>
+    </nav>
+
+    <div class="user-area">
+      <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <section class="welcome-banner">
+      <h1>Painel de Controlo</h1>
+      <p>Gerencie o seu acervo analógico e acompanhe o desempenho da loja.</p>
+    </section>
+
+    <section class="sales-summary">
+      <h2>Resumo de Vendas Recentes</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Disco / Álbum</th>
+              <th>Comprador</th>
+              <th>Data</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaVendas">
+            <tr>
+              <td>The Dark Side of the Moon - Pink Floyd</td>
+              <td>Ana Costa</td>
+              <td>23/10/2026</td>
+              <td>R$ 180,00</td>
+            </tr>
+            <tr>
+              <td>Abbey Road - The Beatles</td>
+              <td>Carlos Silva</td>
+              <td>22/10/2026</td>
+              <td>R$ 150,00</td>
+            </tr>
+            <tr>
+              <td>Rumours - Fleetwood Mac</td>
+              <td>Mariana Souza</td>
+              <td>21/10/2026</td>
+              <td>R$ 165,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="modalDisco" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal()">&times;</span>
+      
+      <h2 class="title">Cadastrar Disco</h2>
+      <p class="subtitle">Insira as informações sobre a venda do disco.</p>
+
+      <form id="formCadastrarDisco" onsubmit="salvarDisco(event)">
+        <div class="input-group">
+          <label for="nomeDisco">Nome do Disco</label>
+          <input type="text" id="nomeDisco" placeholder="Ex: Dark Side of the Moon" required>
+        </div>
+
+        <div class="input-group">
+          <label for="nomeComprador">Nome do Comprador</label>
+          <input type="text" id="nomeComprador" placeholder="Ex: João Silva" required>
+        </div>
+
+        <div class="input-group">
+          <label for="dataCompra">Data que Comprou</label>
+          <input type="date" id="dataCompra" required>
+        </div>
+
+        <div class="input-group">
+          <label for="valorDisco">Valor do Disco (R$)</label>
+          <input type="number" id="valorDisco" step="0.01" placeholder="Ex: 150.00" required>
+        </div>
+
+        <button type="submit" class="btn-access">Salvar</button>
+      </form>
+    </div>
+</dialog>
+
+  <script src="../script/script.js"></script>
+  <script>
+    window.onload = function() {
+      const usuarioSalvo = localStorage.getItem('usuarioLogado');
+      if (usuarioSalvo) {
+        document.getElementById('nomeUsuario').textContent = usuarioSalvo;
+      }
+    };
+  </script>
+</body>
+</html>
